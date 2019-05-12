@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "rollup": "1.11.3",
+    "rollup-plugin-bundleutils": "1.1.1",
+    "rollup-plugin-commonjs": "9.3.4",
+    "rollup-plugin-node-resolve": "4.2.4",
+    "rollup-plugin-replace": "2.2.0",
+    "rollup-plugin-terser": "4.0.4"
+  },
+  "license": "MIT",
+  "module": "react-dom.js",
+  "name": "@amory/react-dom",
+  "scripts": {
+    "build": "rollup -c",
+    "postbuild": "rm -rf node_modules yarn.lock"
+  },
+  "version": "16.8.6"
+}

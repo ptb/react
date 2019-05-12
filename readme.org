@@ -1,0 +1,466 @@
+* @amory/react
+:properties:
+:header-args: :cache yes :comments no :mkdirp yes :padline yes :results silent
+:end:
+#+startup: showall nohideblocks hidestars indent
+
+** Table of Contents                                                   :TOC:
+- [[#amoryreact][@amory/react]]
+  - [[#example][Example]]
+    - [[#exampleindexhtml][example/index.html]]
+    - [[#exampleindexjsx][example/index.jsx]]
+    - [[#exampleindexjs][example/index.js]]
+  - [[#references][References]]
+  - [[#license][License]]
+  - [[#code][Code]]
+    - [[#react][react]]
+      - [[#indexjs][index.js]]
+      - [[#packagejson][package.json]]
+      - [[#rollupconfigjs][rollup.config.js]]
+    - [[#react-dom][react-dom]]
+      - [[#domindexjs][dom/index.js]]
+      - [[#dompackagejson][dom/package.json]]
+      - [[#domrollupconfigjs][dom/rollup.config.js]]
+    - [[#react-dom-server][react-dom-server]]
+      - [[#domserverindexjs][dom/server/index.js]]
+      - [[#domserverpackagejson][dom/server/package.json]]
+      - [[#domserverrollupconfigjs][dom/server/rollup.config.js]]
+
+** Example
+
+*** example/index.html
+
+#+HTML: <details>
+#+begin_src html :tangle example/index.html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title> </title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./index.js" type="module"></script>
+  </body>
+</html>
+#+end_src
+#+HTML: </details>
+
+*** example/index.jsx
+
+This is some example JSX, before it is transpiled by [[https://babeljs.io/repl/][Babel]]:
+
+#+begin_src jsx
+/* @jsx h @jsxFrag Fragment */
+import { createElement as h } from "./react.js"
+import { hydrate } from "./react-dom.js"
+
+function App () {
+  return <div>Hello, World!</div>
+}
+
+hydrate (<App />, document.getElementById ("root"))
+#+end_src
+
+*** example/index.js
+
+This is the equivalent JavaScript, after it is transpiled by [[https://babeljs.io/repl/][Babel]]:
+
+#+begin_src js :tangle example/index.js
+/* @jsx h @jsxFrag Fragment */
+import { createElement as h } from "./react.js"
+import { hydrate } from "./react-dom.js"
+
+function App () {
+  return h ("div", {}, "Hello, World!")
+}
+
+hydrate (h (App), document.getElementById ("root"))
+#+end_src
+
+** References
+
+- https://reactjs.org/docs/react-without-jsx.html
+
+** [[https://github.com/facebook/react/blob/master/LICENSE][License]]
+
+#+begin_quote
+MIT License
+
+Copyright (c) Facebook, Inc. and its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+#+end_quote
+
+** Code
+
+*** react
+
+**** index.js
+
+#+HTML: <details>
+#+begin_src js :tangle src/index.js
+import React from "react"
+
+const {
+  Children,
+  cloneElement,
+  Component,
+  createContext,
+  createElement,
+  createFactory,
+  createRef,
+  forwardRef,
+  Fragment,
+  isValidElement,
+  lazy,
+  memo,
+  PureComponent,
+  StrictMode,
+  Suspense,
+  unstable_ConcurrentMode,
+  unstable_Profiler,
+  useCallback,
+  useContext,
+  useDebugValue,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+  version,
+  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+} = React
+
+export {
+  React as default,
+  Children,
+  cloneElement,
+  Component,
+  createContext,
+  createElement,
+  createElement as h,
+  createFactory,
+  createRef,
+  forwardRef,
+  Fragment,
+  isValidElement,
+  lazy,
+  memo,
+  PureComponent,
+  StrictMode,
+  Suspense,
+  unstable_ConcurrentMode,
+  unstable_Profiler,
+  useCallback,
+  useContext,
+  useDebugValue,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+  version,
+  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+}
+#+end_src
+#+HTML: </details>
+
+**** package.json
+
+#+HTML: <details>
+#+begin_src json :tangle src/package.json
+{
+  "devDependencies": {
+    "react": "16.8.6",
+    "rollup": "1.11.3",
+    "rollup-plugin-commonjs": "9.3.4",
+    "rollup-plugin-node-resolve": "4.2.4",
+    "rollup-plugin-replace": "2.2.0",
+    "rollup-plugin-terser": "4.0.4"
+  },
+  "license": "MIT",
+  "module": "react.js",
+  "name": "@amory/react",
+  "scripts": {
+    "build": "rollup -c",
+    "postbuild": "rm -rf node_modules yarn.lock"
+  },
+  "version": "16.8.6"
+}
+#+end_src
+#+HTML: </details>
+
+**** rollup.config.js
+
+#+HTML: <details>
+#+begin_src js :tangle src/rollup.config.js
+import commonjs from "rollup-plugin-commonjs"
+import nodeResolve from "rollup-plugin-node-resolve"
+import replace from "rollup-plugin-replace"
+import { terser } from "rollup-plugin-terser"
+import pkg from "./package.json"
+
+export default {
+  "input": "index.js",
+  "output": {
+    "banner": `/*! @copyright Facebook, Inc. | @license MIT | @link reactjs.org | @version ${pkg.devDependencies.react} */`,
+    "file": pkg.module,
+    "format": "esm"
+  },
+  "plugins": [
+    replace ({
+      "process.env.NODE_ENV": JSON.stringify ("production")
+    }),
+    nodeResolve (),
+    commonjs ({
+      "include": "node_modules/**",
+      "sourceMap": false
+    }),
+    terser ({
+      "mangle": {
+        "toplevel": true
+      },
+      "output": {
+        "comments": /^!/u
+      },
+      "sourcemap": false
+    })
+  ]
+}
+#+end_src
+#+HTML: </details>
+
+*** react-dom
+
+**** dom/index.js
+
+#+HTML: <details>
+#+begin_src js :tangle src/dom/index.js
+import ReactDOM from "react-dom"
+
+const {
+  createPortal,
+  findDOMNode,
+  flushSync,
+  hydrate,
+  render,
+  unmountComponentAtNode,
+  unstable_batchedUpdates,
+  unstable_createPortal,
+  unstable_createRoot,
+  unstable_flushControlled,
+  unstable_interactiveUpdates,
+  unstable_renderSubtreeIntoContainer,
+  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+} = ReactDOM
+
+export {
+  ReactDOM as default,
+  createPortal,
+  findDOMNode,
+  flushSync,
+  hydrate,
+  render,
+  unmountComponentAtNode,
+  unstable_batchedUpdates,
+  unstable_createPortal,
+  unstable_createRoot,
+  unstable_flushControlled,
+  unstable_interactiveUpdates,
+  unstable_renderSubtreeIntoContainer,
+  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+}
+#+end_src
+#+HTML: </details>
+
+**** dom/package.json
+
+#+HTML: <details>
+#+begin_src json :tangle src/dom/package.json
+{
+  "devDependencies": {
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "rollup": "1.11.3",
+    "rollup-plugin-bundleutils": "1.1.1",
+    "rollup-plugin-commonjs": "9.3.4",
+    "rollup-plugin-node-resolve": "4.2.4",
+    "rollup-plugin-replace": "2.2.0",
+    "rollup-plugin-terser": "4.0.4"
+  },
+  "license": "MIT",
+  "module": "react-dom.js",
+  "name": "@amory/react-dom",
+  "scripts": {
+    "build": "rollup -c",
+    "postbuild": "rm -rf node_modules yarn.lock"
+  },
+  "version": "16.8.6"
+}
+#+end_src
+#+HTML: </details>
+
+**** dom/rollup.config.js
+
+#+HTML: <details>
+#+begin_src js :tangle src/dom/rollup.config.js
+import { regex } from "rollup-plugin-bundleutils"
+import commonjs from "rollup-plugin-commonjs"
+import nodeResolve from "rollup-plugin-node-resolve"
+import replace from "rollup-plugin-replace"
+import { terser } from "rollup-plugin-terser"
+import pkg from "./package.json"
+
+export default {
+  "external": ["react"],
+  "input": "index.js",
+  "output": {
+    "banner": `/*! @copyright Facebook, Inc. | @license MIT | @link reactjs.org | @version ${pkg.devDependencies.react} */`,
+    "file": pkg.module,
+    "format": "esm"
+  },
+  "plugins": [
+    replace ({
+      "process.env.NODE_ENV": JSON.stringify ("production")
+    }),
+    nodeResolve (),
+    commonjs ({
+      "include": "node_modules/**",
+      "sourceMap": false
+    }),
+    terser ({
+      "mangle": {
+        "toplevel": true
+      },
+      "output": {
+        "comments": /^!/u
+      },
+      "sourcemap": false
+    }),
+    regex ([
+      ['"react"', '"./react.js"']
+    ])
+  ]
+}
+#+end_src
+#+HTML: </details>
+
+*** react-dom-server
+
+**** dom/server/index.js
+
+#+HTML: <details>
+#+begin_src js :tangle src/dom/server/index.js
+import ReactDOMServer from "react-dom/server"
+
+const {
+  renderToNodeStream,
+  renderToStaticMarkup,
+  renderToStaticNodeStream,
+  renderToString,
+  version
+} = ReactDOMServer
+
+export {
+  ReactDOMServer as default,
+  renderToNodeStream,
+  renderToStaticMarkup,
+  renderToStaticNodeStream,
+  renderToString,
+  version
+}
+#+end_src
+#+HTML: </details>
+
+**** dom/server/package.json
+
+#+HTML: <details>
+#+begin_src json :tangle src/dom/server/package.json
+{
+  "devDependencies": {
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "rollup": "1.11.3",
+    "rollup-plugin-bundleutils": "1.1.1",
+    "rollup-plugin-commonjs": "9.3.4",
+    "rollup-plugin-node-resolve": "4.2.4",
+    "rollup-plugin-replace": "2.2.0",
+    "rollup-plugin-terser": "4.0.4"
+  },
+  "license": "MIT",
+  "module": "react-dom-server.js",
+  "name": "@amory/react-dom-server",
+  "scripts": {
+    "build": "rollup -c",
+    "postbuild": "rm -rf node_modules yarn.lock"
+  },
+  "version": "16.8.6"
+}
+#+end_src
+#+HTML: </details>
+
+**** dom/server/rollup.config.js
+
+#+HTML: <details>
+#+begin_src js :tangle src/dom/server/rollup.config.js
+import { regex } from "rollup-plugin-bundleutils"
+import commonjs from "rollup-plugin-commonjs"
+import nodeResolve from "rollup-plugin-node-resolve"
+import replace from "rollup-plugin-replace"
+import { terser } from "rollup-plugin-terser"
+import pkg from "./package.json"
+
+export default {
+  "external": ["react", "stream"],
+  "input": "index.js",
+  "output": {
+    "banner": `/*! @copyright Facebook, Inc. | @license MIT | @link reactjs.org | @version ${pkg.devDependencies.react} */`,
+    "file": pkg.module,
+    "format": "esm"
+  },
+  "plugins": [
+    replace ({
+      "process.env.NODE_ENV": JSON.stringify ("production")
+    }),
+    nodeResolve (),
+    commonjs ({
+      "include": "node_modules/**",
+      "sourceMap": false
+    }),
+    terser ({
+      "mangle": {
+        "toplevel": true
+      },
+      "output": {
+        "comments": /^!/u
+      },
+      "sourcemap": false
+    }),
+    regex ([
+      ['"react"', '"./react.js"']
+    ])
+  ]
+}
+#+end_src
+#+HTML: </details>
