@@ -1,0 +1,43 @@
+{
+  "bugs": {
+    "url": "https://github.com/ptb/react/issues"
+  },
+  "devDependencies": {
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "rollup": "1.11.3",
+    "rollup-plugin-bundleutils": "1.1.1",
+    "rollup-plugin-commonjs": "9.3.4",
+    "rollup-plugin-copy": "2.0.1",
+    "rollup-plugin-node-resolve": "4.2.4",
+    "rollup-plugin-replace": "2.2.0",
+    "rollup-plugin-terser": "4.0.4"
+  },
+  "files": [
+    "react.js",
+    "react-dom-server.js"
+  ],
+  "homepage": "https://github.com/ptb/react#readme",
+  "license": "MIT",
+  "maintainers": [
+    {
+      "email": "pbosse@gmail.com",
+      "name": "Peter T Bosse II"
+    }
+  ],
+  "module": "react-dom-server.js",
+  "name": "@amory/react-dom-server",
+  "publishConfig": {
+    "access": "public"
+  },
+  "readmeFilename": "readme.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptb/react.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "postbuild": "rm -rf node_modules yarn.lock"
+  },
+  "version": "16.8.6"
+}
