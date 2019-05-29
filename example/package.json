@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@amory/react": "latest",
+    "@amory/react-dom": "latest",
+    "@amory/style": "latest"
+  }
+}
