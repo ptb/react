@@ -5,7 +5,7 @@
   "devDependencies": {
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "rollup": "1.11.3",
+    "rollup": "3.29.5",
     "rollup-plugin-bundleutils": "1.1.1",
     "rollup-plugin-commonjs": "9.3.4",
     "rollup-plugin-copy": "2.0.1",
